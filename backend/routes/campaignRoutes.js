@@ -1,11 +1,19 @@
 const express = require("express");
 const router = express.Router();
+
 const {
-  addCampaign,
-  getCampaigns
+  createCampaign,
+  getCampaigns,
+  getCampaignById,
+  updateCampaign,
+  deleteCampaign,
 } = require("../controllers/campaignController");
 
-router.post("/add", addCampaign);
+// Routes
+router.post("/add", createCampaign);
 router.get("/", getCampaigns);
+router.get("/:id", getCampaignById);
+router.put("/:id", updateCampaign);
+router.delete("/:id", deleteCampaign);
 
 module.exports = router;

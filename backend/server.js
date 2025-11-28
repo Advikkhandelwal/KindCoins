@@ -18,7 +18,7 @@ app.use("/api/campaigns", require("./routes/campaignRoutes"));
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("✅ KindCoins Backend Running");
+  res.send("KindCoins Backend Running");
 });
 
 // Error Handler
