@@ -10,7 +10,7 @@ exports.getAllCampaigns = async () => {
   return await Campaign.find();
 };
 
-// Get single campaign
+// Get single campaign by ID
 exports.getCampaignById = async (id) => {
   return await Campaign.findById(id);
 };

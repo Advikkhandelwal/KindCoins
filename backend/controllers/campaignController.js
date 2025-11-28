@@ -20,11 +20,13 @@ exports.getCampaigns = async (req, res) => {
   }
 };
 
-// Get single campaign
+// Get single campaign by ID
 exports.getCampaignById = async (req, res) => {
   try {
     const campaign = await campaignService.getCampaignById(req.params.id);
-    if (!campaign) return res.status(404).json({ message: "Campaign not found" });
+    if (!campaign) {
+      return res.status(404).json({ message: "Campaign not found" });
+    }
     res.json(campaign);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -35,7 +37,9 @@ exports.getCampaignById = async (req, res) => {
 exports.updateCampaign = async (req, res) => {
   try {
     const updated = await campaignService.updateCampaign(req.params.id, req.body);
-    if (!updated) return res.status(404).json({ message: "Campaign not found" });
+    if (!updated) {
+      return res.status(404).json({ message: "Campaign not found" });
+    }
     res.json(updated);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -46,7 +50,9 @@ exports.updateCampaign = async (req, res) => {
 exports.deleteCampaign = async (req, res) => {
   try {
     const deleted = await campaignService.deleteCampaign(req.params.id);
-    if (!deleted) return res.status(404).json({ message: "Campaign not found" });
+    if (!deleted) {
+      return res.status(404).json({ message: "Campaign not found" });
+    }
     res.json({ message: "Campaign deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
