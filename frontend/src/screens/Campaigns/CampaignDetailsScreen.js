@@ -43,7 +43,7 @@ const CampaignDetailsScreen = ({ route, navigation }) => {
         <ScreenWrapper>
             <GradientHeader title={campaign.name} showBack={true} />
             <ScrollView contentContainerStyle={styles.content}>
-                <Image source={{ uri: campaign.image }} style={styles.image} />
+
 
                 <View style={styles.card}>
                     <Text style={styles.description}>{campaign.description}</Text>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.08, // Softer opacity
         shadowRadius: 16, // Blurrrier shadow
         elevation: 6,
-        marginTop: -20, // Overlap effect
+        marginTop: 10, // Overlap effect
     },
     description: {
         fontSize: 16,
