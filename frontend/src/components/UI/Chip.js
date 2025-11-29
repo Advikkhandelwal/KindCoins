@@ -1,23 +1,56 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { COLORS } from '../../constants/colors';
 
-const Chip = (props) => {
+const Chip = ({ label, selected, onPress, style }) => {
     return (
-        <View style={styles.container}>
-            <Text>Chip (Placeholder)</Text>
-        </View>
+        <TouchableOpacity
+            style={[
+                styles.chip,
+                selected ? styles.selectedChip : styles.unselectedChip,
+                style,
+            ]}
+            onPress={onPress}
+        >
+            <Text
+                style={[
+                    styles.text,
+                    selected ? styles.selectedText : styles.unselectedText,
+                ]}
+            >
+                {label}
+            </Text>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
+    chip: {
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 20,
+        marginRight: 8,
         borderWidth: 1,
-        borderColor: '#eee',
-        margin: 10,
+    },
+    selectedChip: {
+        backgroundColor: COLORS.primary,
+        borderColor: COLORS.primary,
+    },
+    unselectedChip: {
+        backgroundColor: COLORS.white,
+        borderColor: COLORS.lightGray,
+    },
+    text: {
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    selectedText: {
+        color: COLORS.white,
+    },
+    unselectedText: {
+        color: COLORS.darkGray,
     },
 });
 
 export default Chip;
+
