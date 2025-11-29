@@ -6,14 +6,14 @@ import RootNavigator from './src/navigation/RootNavigator';
 import { AppProvider } from './src/context/AppProvider';
 
 export default function App() {
-    return (
-        <SafeAreaProvider>
-            <AppProvider>
-                <NavigationContainer>
-                    <RootNavigator />
-                    <StatusBar style="auto" />
-                </NavigationContainer>
-            </AppProvider>
-        </SafeAreaProvider>
-    );
+  return (
+    <SafeAreaProvider>
+      <AppProvider>
+        <NavigationContainer>
+          <RootNavigator />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </AppProvider>
+    </SafeAreaProvider>
+  );
 }
