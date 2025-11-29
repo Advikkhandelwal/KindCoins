@@ -178,7 +178,7 @@ const AddDonationScreen = ({ navigation, route }) => {
                                 }}
                             >
                                 <Text style={styles.modalItemText}>{item.name}</Text>
-                                {item.targetAmount && <Text style={styles.modalItemSub}>Target: ${item.targetAmount}</Text>}
+                                {item.targetAmount && <Text style={styles.modalItemSub}>Target: Rs.{item.targetAmount}</Text>}
                             </TouchableOpacity>
                         )}
                         ListEmptyComponent={<Text style={styles.emptyText}>No campaigns found.</Text>}
