@@ -133,14 +133,14 @@ const styles = StyleSheet.create({
     },
     fullWidthCard: {
         backgroundColor: COLORS.white,
-        borderRadius: METRICS.borderRadius,
+        borderRadius: 16, // Increased radius
         padding: 16,
-        marginBottom: 24,
+        marginBottom: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOffset: { width: 0, height: 4 }, // Softer shadow
+        shadowOpacity: 0.08, // Reduced opacity
+        shadowRadius: 12, // Increased radius
+        elevation: 4,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -158,8 +158,11 @@ const styles = StyleSheet.create({
         color: COLORS.warning,
     },
     sectionTitle: {
-        marginTop: 16,
-        marginBottom: 12,
+        fontSize: 20,
+        fontWeight: '700', // Slightly bolder
+        color: COLORS.text,
+        marginBottom: 16, // Increased spacing
+        marginTop: 8,
     },
     quickActionsGrid: {
         flexDirection: 'row',

@@ -50,12 +50,12 @@ const DonationsScreen = ({ navigation }) => {
             <View style={styles.header}>
                 <Text style={styles.title}>Donations</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('AddDonation')}>
-                    <Ionicons name="add-circle" size={32} color="#4CAF50" />
+                    <Ionicons name="add-circle" size={32} color="#FF8A65" />
                 </TouchableOpacity>
             </View>
 
             {loading ? (
-                <ActivityIndicator size="large" color="#4CAF50" style={styles.loader} />
+                <ActivityIndicator size="large" color="#FF8A65" style={styles.loader} />
             ) : (
                 <FlatList
                     data={donations}
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#4CAF50',
+        color: '#FF8A65',
     },
     campaign: {
         fontSize: 14,

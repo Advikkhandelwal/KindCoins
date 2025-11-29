@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     selectionButtonActive: {
-        backgroundColor: '#4CAF50',
-        borderColor: '#4CAF50',
+        backgroundColor: '#FF8A65',
+        borderColor: '#FF8A65',
     },
     selectionButtonText: {
         fontSize: 14,

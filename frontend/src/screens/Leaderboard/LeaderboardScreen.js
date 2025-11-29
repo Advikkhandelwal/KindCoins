@@ -75,7 +75,7 @@ const LeaderboardScreen = () => {
             </View>
 
             {loading ? (
-                <ActivityIndicator size="large" color="#4CAF50" style={styles.loader} />
+                <ActivityIndicator size="large" color="#FF8A65" style={styles.loader} />
             ) : (
                 <FlatList
                     data={leaderboard}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#4CAF50',
+        color: '#FF8A65',
     },
     loader: {
         marginTop: 50,

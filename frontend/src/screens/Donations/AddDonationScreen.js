@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     selectionButtonActive: {
-        backgroundColor: '#4CAF50',
-        borderColor: '#4CAF50',
+        backgroundColor: '#FF8A65',
+        borderColor: '#FF8A65',
     },
     selectionButtonText: {
         fontSize: 14,
@@ -286,12 +286,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     button: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#FF8A65',
         padding: 16,
         borderRadius: 12,
         alignItems: 'center',
         marginTop: 10,
-        shadowColor: '#4CAF50',
+        shadowColor: '#FF8A65',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,

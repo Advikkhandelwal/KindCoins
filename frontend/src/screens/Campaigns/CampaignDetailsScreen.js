@@ -102,13 +102,14 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: COLORS.white,
-        borderRadius: METRICS.borderRadius,
-        padding: 20,
+        borderRadius: 24, // More rounded
+        padding: 24, // More padding
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOffset: { width: 0, height: 8 }, // Deeper shadow
+        shadowOpacity: 0.08, // Softer opacity
+        shadowRadius: 16, // Blurrrier shadow
+        elevation: 6,
+        marginTop: -20, // Overlap effect
     },
     description: {
         fontSize: 16,
