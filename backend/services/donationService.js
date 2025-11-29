@@ -5,7 +5,7 @@ exports.createDonation = async (data) => {
 };
 
 exports.getAllDonations = async () => {
-  return await Donation.find().populate("campaign");
+  return await Donation.find().populate("campaign").sort({ date: -1 });
 };
 
 

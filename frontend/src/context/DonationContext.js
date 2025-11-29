@@ -21,17 +21,60 @@ export const DonationProvider = ({ children }) => {
         }
     };
 
-    const addDonation = async (donation) => {
-        // Optimistic update or refetch. For now, let's refetch to be safe with IDs.
-        await fetchDonations();
+    const addDonation = async (donationData) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/donations/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donationData),
+            });
+            if (response.ok) {
+                const newDonation = await response.json();
+                setDonations((prev) => [newDonation, ...prev]);
+                return { success: true };
+            } else {
+                const error = await response.json();
+                return { success: false, message: error.message };
+            }
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     };
 
-    const updateDonation = async (id, updatedDonation) => {
-        await fetchDonations();
+    const updateDonation = async (id, donationData) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/donations/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donationData),
+            });
+            if (response.ok) {
+                const updatedDonation = await response.json();
+                setDonations((prev) => prev.map((d) => (d._id === id ? updatedDonation : d)));
+                return { success: true };
+            } else {
+                const error = await response.json();
+                return { success: false, message: error.message };
+            }
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     };
 
     const deleteDonation = async (id) => {
-        await fetchDonations();
+        try {
+            const response = await fetch(`${API_BASE_URL}/donations/${id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                setDonations((prev) => prev.filter((d) => d._id !== id));
+                return { success: true };
+            } else {
+                return { success: false, message: 'Failed to delete' };
+            }
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     };
 
     return (

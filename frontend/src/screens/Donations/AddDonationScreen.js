@@ -5,8 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { API_BASE_URL } from '../../constants/config';
 
-const API_URL = `${API_BASE_URL}/donations/add`;
 const CAMPAIGNS_URL = `${API_BASE_URL}/campaigns`;
+
+import { useDonation } from '../../context/DonationContext';
 
 const AddDonationScreen = ({ navigation, route }) => {
     const [donorName, setDonorName] = useState('');
@@ -39,6 +40,8 @@ const AddDonationScreen = ({ navigation, route }) => {
         }
     };
 
+    const { addDonation } = useDonation();
+
     const handleAddDonation = async () => {
         if (!donorName || !amount || !campaign) {
             Alert.alert('Error', 'Please fill in all required fields (Name, Amount, Campaign)');
@@ -47,28 +50,21 @@ const AddDonationScreen = ({ navigation, route }) => {
 
         setLoading(true);
         try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    donorName,
-                    amount: parseFloat(amount),
-                    campaign: campaign._id,
-                    paymentMode,
-                    donorType,
-                    notes,
-                    date: new Date(),
-                }),
+            const result = await addDonation({
+                donorName,
+                amount: parseFloat(amount),
+                campaign: campaign._id,
+                paymentMode,
+                donorType,
+                notes,
+                date: new Date(),
             });
 
-            if (response.ok) {
+            if (result.success) {
                 Alert.alert('Success', 'Donation added successfully');
                 navigation.goBack();
             } else {
-                const errorData = await response.json();
-                Alert.alert('Error', errorData.message || 'Failed to add donation');
+                Alert.alert('Error', result.message || 'Failed to add donation');
             }
         } catch (error) {
             console.error('Error adding donation:', error);

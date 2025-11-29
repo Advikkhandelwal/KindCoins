@@ -5,8 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { API_BASE_URL } from '../../constants/config';
 
-const API_URL = `${API_BASE_URL}/donations`;
 const CAMPAIGNS_URL = `${API_BASE_URL}/campaigns`;
+
+import { useDonation } from '../../context/DonationContext';
 
 const EditDonationScreen = ({ route, navigation }) => {
     const { donation } = route.params;
@@ -42,6 +43,8 @@ const EditDonationScreen = ({ route, navigation }) => {
         }
     };
 
+    const { updateDonation, deleteDonation } = useDonation();
+
     const handleUpdateDonation = async () => {
         if (!donorName || !amount || !campaign) {
             Alert.alert('Error', 'Please fill in all required fields');
@@ -50,27 +53,20 @@ const EditDonationScreen = ({ route, navigation }) => {
 
         setLoading(true);
         try {
-            const response = await fetch(`${API_URL}/${donation._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    donorName,
-                    amount: parseFloat(amount),
-                    campaign: campaign._id,
-                    paymentMode,
-                    donorType,
-                    notes,
-                }),
+            const result = await updateDonation(donation._id, {
+                donorName,
+                amount: parseFloat(amount),
+                campaign: campaign._id,
+                paymentMode,
+                donorType,
+                notes,
             });
 
-            if (response.ok) {
+            if (result.success) {
                 Alert.alert('Success', 'Donation updated successfully');
                 navigation.goBack();
             } else {
-                const errorData = await response.json();
-                Alert.alert('Error', errorData.message || 'Failed to update donation');
+                Alert.alert('Error', result.message || 'Failed to update donation');
             }
         } catch (error) {
             console.error('Error updating donation:', error);
@@ -92,14 +88,12 @@ const EditDonationScreen = ({ route, navigation }) => {
                     onPress: async () => {
                         setLoading(true);
                         try {
-                            const response = await fetch(`${API_URL}/${donation._id}`, {
-                                method: 'DELETE',
-                            });
-                            if (response.ok) {
+                            const result = await deleteDonation(donation._id);
+                            if (result.success) {
                                 Alert.alert('Success', 'Donation deleted successfully');
                                 navigation.goBack();
                             } else {
-                                Alert.alert('Error', 'Failed to delete donation');
+                                Alert.alert('Error', result.message || 'Failed to delete donation');
                             }
                         } catch (error) {
                             console.error('Error deleting donation:', error);

@@ -10,13 +10,18 @@ import { formatCurrency } from '../../utils/formatCurrency';
 
 import { API_BASE_URL } from '../../constants/config';
 
+import { useFocusEffect } from '@react-navigation/native';
+
 const CampaignDetailsScreen = ({ route, navigation }) => {
+
     const { campaign: initialCampaign } = route.params;
     const [campaign, setCampaign] = React.useState(initialCampaign);
 
-    React.useEffect(() => {
-        fetchCampaignDetails();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchCampaignDetails();
+        }, [])
+    );
 
     const fetchCampaignDetails = async () => {
         try {
