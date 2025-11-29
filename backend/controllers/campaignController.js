@@ -1,4 +1,5 @@
 const campaignService = require("../services/campaignService");
+const Campaign = require("../models/Campaign");
 
 // Create campaign
 exports.createCampaign = async (req, res) => {
@@ -10,10 +11,29 @@ exports.createCampaign = async (req, res) => {
   }
 };
 
-// Get all campaigns
+// Get all campaigns with collected amount
 exports.getCampaigns = async (req, res) => {
   try {
-    const campaigns = await campaignService.getAllCampaigns();
+    const campaigns = await Campaign.aggregate([
+      {
+        $lookup: {
+          from: "donations",
+          localField: "_id",
+          foreignField: "campaign",
+          as: "donations",
+        },
+      },
+      {
+        $addFields: {
+          collectedAmount: { $sum: "$donations.amount" },
+        },
+      },
+      {
+        $project: {
+          donations: 0, // Exclude donations array to keep response light
+        },
+      },
+    ]);
     res.json(campaigns);
   } catch (error) {
     res.status(500).json({ message: error.message });
