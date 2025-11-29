@@ -13,13 +13,19 @@ const DonationCard = ({ donation }) => {
             </View>
             <View style={styles.content}>
                 <Text style={styles.name}>{donation.donorName}</Text>
-                <Text style={styles.message} numberOfLines={1}>
-                    {donation.message || 'No message'}
-                </Text>
+                {donation.notes ? (
+                    <Text style={styles.message} numberOfLines={1}>
+                        {donation.notes}
+                    </Text>
+                ) : null}
             </View>
             <View style={styles.amountContainer}>
                 <Text style={styles.amount}>{formatCurrency(donation.amount)}</Text>
-                <Text style={styles.date}>{donation.date}</Text>
+                <Text style={styles.date}>{new Date(donation.date).toLocaleDateString("en-IN")}</Text>
+                <Text style={styles.date}>{new Date(donation.date).toLocaleTimeString("en-IN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}</Text>
             </View>
         </View>
     );

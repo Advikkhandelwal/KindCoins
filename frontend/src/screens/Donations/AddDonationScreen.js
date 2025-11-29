@@ -61,8 +61,17 @@ const AddDonationScreen = ({ navigation, route }) => {
             });
 
             if (result.success) {
-                Alert.alert('Success', 'Donation added successfully');
-                navigation.goBack();
+                // Pass the donation details to ThankYou screen. 
+                // Since result doesn't contain the full donation object (it might, but let's construct what we need or assume result has it if we updated context to return it)
+                // Actually, addDonation in context returns { success: true } but we updated state. 
+                // We should probably pass the data we just submitted.
+                navigation.navigate('ThankYou', {
+                    donation: {
+                        amount: parseFloat(amount),
+                        donorName,
+                        campaign: campaign ? campaign.name : 'General'
+                    }
+                });
             } else {
                 Alert.alert('Error', result.message || 'Failed to add donation');
             }
