@@ -17,6 +17,7 @@ const AnalyticsScreen = () => {
         try {
             const response = await fetch(`${API_BASE_URL}/donations/analytics`);
             const data = await response.json();
+            console.log("Frontend Analytics Data:", JSON.stringify(data, null, 2));
             setAnalytics(data);
         } catch (error) {
             console.error('Error fetching analytics:', error);
@@ -122,9 +123,6 @@ const AnalyticsScreen = () => {
                                 <View style={styles.rowHeader}>
                                     <Text style={styles.campaignName}>{item.campaignName || 'Unknown'}</Text>
                                     <Text style={styles.campaignAmount}>₹{item.totalAmount}</Text>
-                                </View>
-                                <View style={styles.barBackground}>
-                                    <View style={[styles.barFill, { width: `${width}%` }]} />
                                 </View>
                                 <Text style={styles.campaignCount}>{item.count} donations ({percentage.toFixed(1)}%)</Text>
                             </View>
@@ -243,7 +241,7 @@ const styles = StyleSheet.create({
     },
     campaignCount: {
         fontSize: 12,
-        color: '#888',
+        color: '#91af23ff',
     },
     emptyText: {
         textAlign: 'center',

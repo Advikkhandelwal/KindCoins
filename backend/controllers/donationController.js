@@ -56,16 +56,19 @@ exports.getAnalytics = async (req, res) => {
       {
         $project: {
           campaignName: "$campaign.name",
+          targetAmount: "$campaign.targetAmount",
           totalAmount: 1,
           count: 1,
         },
       },
     ]);
 
-    res.json({
+    const result = {
       total: totalDonations[0] || { totalAmount: 0, count: 0 },
       byCampaign: donationsByCampaign,
-    });
+    };
+    console.log("Analytics Result:", JSON.stringify(result, null, 2));
+    res.json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
