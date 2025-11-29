@@ -1,5 +1,6 @@
 const campaignService = require("../services/campaignService");
 const Campaign = require("../models/Campaign");
+const mongoose = require("mongoose");
 
 // Create campaign
 exports.createCampaign = async (req, res) => {
@@ -43,11 +44,32 @@ exports.getCampaigns = async (req, res) => {
 // Get single campaign by ID
 exports.getCampaignById = async (req, res) => {
   try {
-    const campaign = await campaignService.getCampaignById(req.params.id);
-    if (!campaign) {
+    const campaign = await Campaign.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(req.params.id) } },
+      {
+        $lookup: {
+          from: "donations",
+          localField: "_id",
+          foreignField: "campaign",
+          as: "donations",
+        },
+      },
+      {
+        $addFields: {
+          collectedAmount: { $sum: "$donations.amount" },
+        },
+      },
+      {
+        $project: {
+          donations: 0,
+        },
+      },
+    ]);
+
+    if (!campaign || campaign.length === 0) {
       return res.status(404).json({ message: "Campaign not found" });
     }
-    res.json(campaign);
+    res.json(campaign[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

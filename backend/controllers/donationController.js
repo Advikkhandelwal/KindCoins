@@ -79,6 +79,7 @@ exports.getLeaderboard = async (req, res) => {
         $group: {
           _id: "$donorName",
           totalDonated: { $sum: "$amount" },
+          donationCount: { $sum: 1 },
         },
       },
       { $sort: { totalDonated: -1 } },

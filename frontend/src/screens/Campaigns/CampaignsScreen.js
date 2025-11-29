@@ -6,8 +6,16 @@ import CampaignCard from '../../components/Cards/CampaignCard';
 import { useCampaign } from '../../context/CampaignContext';
 import { METRICS } from '../../constants/metrics';
 
+import { useFocusEffect } from '@react-navigation/native';
+
 const CampaignsScreen = ({ navigation }) => {
-    const { campaigns } = useCampaign();
+    const { campaigns, fetchCampaigns } = useCampaign();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchCampaigns();
+        }, [])
+    );
 
     return (
         <ScreenWrapper>
@@ -19,7 +27,7 @@ const CampaignsScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <FlatList
                     data={campaigns}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item._id}
                     renderItem={({ item }) => (
                         <CampaignCard
                             campaign={item}

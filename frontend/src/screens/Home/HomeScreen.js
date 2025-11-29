@@ -19,9 +19,18 @@ const QuickAction = ({ icon, label, onPress }) => (
     </TouchableOpacity>
 );
 
+import { useFocusEffect } from '@react-navigation/native';
+
 const HomeScreen = ({ navigation }) => {
-    const { donations } = useDonation();
-    const { campaigns } = useCampaign();
+    const { donations, fetchDonations } = useDonation();
+    const { campaigns, fetchCampaigns } = useCampaign();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchDonations();
+            fetchCampaigns();
+        }, [])
+    );
 
     const totalCollected = donations.reduce((sum, d) => sum + d.amount, 0);
     const totalDonors = new Set(donations.map((d) => d.donorName)).size;
@@ -77,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
                         <QuickAction
                             icon="trophy-outline"
                             label="Leaderboard"
-                            onPress={() => navigation.navigate('Leaders')}
+                            onPress={() => navigation.navigate('Leaderboard')}
                         />
                         <QuickAction
                             icon="bar-chart-outline"
@@ -87,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
                     </View>
                     <SectionTitle title="Recent Donations" style={styles.sectionTitle} />
                     {donations.slice(0, 5).map((donation) => (
-                        <DonationCard key={donation.id} donation={donation} />
+                        <DonationCard key={donation._id} donation={donation} />
                     ))}
                 </View>
             </ScrollView>
@@ -98,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     header: {
         paddingTop: 60,
-        paddingBottom: 80, 
+        paddingBottom: 80,
         paddingHorizontal: METRICS.padding,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingHorizontal: METRICS.padding,
-        marginTop: -60, 
+        marginTop: -60,
     },
     statsRow: {
         flexDirection: 'row',

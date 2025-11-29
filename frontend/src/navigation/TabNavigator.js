@@ -26,7 +26,7 @@ const TabNavigator = () => {
                         iconName = focused ? 'heart' : 'heart-outline';
                     } else if (route.name === 'Donations') {
                         iconName = focused ? 'trending-up' : 'trending-up-outline';
-                    } else if (route.name === 'Leaders') {
+                    } else if (route.name === 'Leaderboard') {
                         iconName = focused ? 'trophy' : 'trophy-outline';
                     } else if (route.name === 'Analytics') {
                         iconName = focused ? 'bar-chart' : 'bar-chart-outline';
@@ -39,7 +39,7 @@ const TabNavigator = () => {
             <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="Campaigns" component={CampaignStack} />
             <Tab.Screen name="Donations" component={DonationStack} />
-            <Tab.Screen name="Leaders" component={LeaderStack} />
+            <Tab.Screen name="Leaderboard" component={LeaderStack} />
             <Tab.Screen name="Analytics" component={AnalyticsStack} />
         </Tab.Navigator>
     );

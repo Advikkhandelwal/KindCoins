@@ -8,14 +8,35 @@ import { COLORS } from '../../constants/colors';
 import { METRICS } from '../../constants/metrics';
 import { formatCurrency } from '../../utils/formatCurrency';
 
+import { API_BASE_URL } from '../../constants/config';
+
 const CampaignDetailsScreen = ({ route, navigation }) => {
-    const { campaign } = route.params;
-    const progress = campaign.collectedAmount / campaign.targetAmount;
+    const { campaign: initialCampaign } = route.params;
+    const [campaign, setCampaign] = React.useState(initialCampaign);
+
+    React.useEffect(() => {
+        fetchCampaignDetails();
+    }, []);
+
+    const fetchCampaignDetails = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/campaigns/${initialCampaign._id}`);
+            const data = await response.json();
+            setCampaign(data);
+        } catch (error) {
+            console.error('Error fetching campaign details:', error);
+        }
+    };
+    console.log(campaign);
+
+    const collected = campaign.collectedAmount || 0;
+    const target = campaign.targetAmount || 1;
+    const progress = collected / target;
     const percentage = (progress * 100).toFixed(1);
 
     return (
         <ScreenWrapper>
-            <GradientHeader title={campaign.title} showBack={true} />
+            <GradientHeader title={campaign.name} showBack={true} />
             <ScrollView contentContainerStyle={styles.content}>
                 <Image source={{ uri: campaign.image }} style={styles.image} />
 
@@ -28,7 +49,7 @@ const CampaignDetailsScreen = ({ route, navigation }) => {
                             <Text style={styles.label}>Goal</Text>
                         </View>
                         <View style={styles.statsRow}>
-                            <Text style={styles.amount}>{formatCurrency(campaign.collectedAmount)}</Text>
+                            <Text style={styles.amount}>{formatCurrency(collected)}</Text>
                             <Text style={styles.target}>{formatCurrency(campaign.targetAmount)}</Text>
                         </View>
                         <ProgressBar progress={progress} height={12} />
@@ -36,10 +57,10 @@ const CampaignDetailsScreen = ({ route, navigation }) => {
                     </View>
 
                     <View style={styles.infoRow}>
-                        <View style={styles.infoItem}>
+                        {/* <View style={styles.infoItem}>
                             <Text style={styles.infoValue}>{campaign.donors}</Text>
                             <Text style={styles.infoLabel}>Donors</Text>
-                        </View>
+                        </View> */}
                         <View style={styles.infoItem}>
                             <Text style={styles.infoValue}>24</Text>
                             <Text style={styles.infoLabel}>Days Left</Text>
@@ -53,7 +74,7 @@ const CampaignDetailsScreen = ({ route, navigation }) => {
                     title="Donate Now"
                     onPress={() => navigation.navigate('Donations', {
                         screen: 'AddDonation',
-                        params: { campaignId: campaign.id }
+                        params: { campaignId: campaign._id }
                     })}
                 />
             </View>

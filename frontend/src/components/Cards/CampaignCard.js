@@ -7,14 +7,16 @@ import ProgressBar from '../UI/ProgressBar';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 const CampaignCard = ({ campaign, onPress }) => {
-    const progress = campaign.collectedAmount / campaign.targetAmount;
+    const collected = campaign.collectedAmount || 0;
+    const target = campaign.targetAmount || 1; // Avoid division by zero
+    const progress = collected / target;
     const percentage = (progress * 100).toFixed(1);
 
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.header}>
                 <Ionicons name="heart" size={20} color={COLORS.primary} />
-                <Text style={styles.title}>{campaign.title}</Text>
+                <Text style={styles.title}>{campaign.name}</Text>
             </View>
 
             <Text style={styles.description} numberOfLines={2}>
@@ -28,7 +30,7 @@ const CampaignCard = ({ campaign, onPress }) => {
             <View style={styles.statsRow}>
                 <View>
                     <Text style={styles.label}>Collected</Text>
-                    <Text style={styles.amount}>{formatCurrency(campaign.collectedAmount)}</Text>
+                    <Text style={styles.amount}>{formatCurrency(collected)}</Text>
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
                     <Text style={styles.label}>Target</Text>
