@@ -76,11 +76,13 @@ const CampaignDetailsScreen = ({ route, navigation }) => {
 
             <View style={styles.footer}>
                 <PrimaryButton
-                    title="Donate Now"
+                    title={collected >= target ? "Campaign Fully Funded" : "Donate Now"}
                     onPress={() => navigation.navigate('Donations', {
                         screen: 'AddDonation',
                         params: { campaignId: campaign._id }
                     })}
+                    disabled={collected >= target}
+                    style={collected >= target ? styles.disabledButton : {}}
                 />
             </View>
         </ScreenWrapper>
@@ -166,6 +168,10 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
         borderTopWidth: 1,
         borderTopColor: COLORS.lightGray,
+    },
+    disabledButton: {
+        backgroundColor: COLORS.gray,
+        opacity: 0.7,
     },
 });
 
