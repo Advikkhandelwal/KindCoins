@@ -1,23 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { COLORS } from '../../constants/colors';
+import { METRICS } from '../../constants/metrics';
 
-const OutlineButton = (props) => {
+const OutlineButton = ({ title, onPress, style, textStyle }) => {
     return (
-        <View style={styles.container}>
-            <Text>OutlineButton (Placeholder)</Text>
-        </View>
+        <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+            <Text style={[styles.text, textStyle]}>{title}</Text>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
+    button: {
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: METRICS.borderRadius,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#eee',
-        margin: 10,
+    },
+    text: {
+        color: COLORS.primary,
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
 export default OutlineButton;
+
